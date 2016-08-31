@@ -42,6 +42,12 @@ public class StorageFile {
             super(message);
         }
     }
+    
+    public static class FileDeletedWhileRunningException extends Exception {
+        public FileDeletedWhileRunningException(String message) {
+            super(message);
+        }
+    }
 
     private final JAXBContext jaxbContext;
 
@@ -107,8 +113,9 @@ public class StorageFile {
      * Loads data from this storage file.
      *
      * @throws StorageOperationException if there were errors reading and/or converting data from file.
+     * @throws FileDeletedWhileRunningException if addressbook is deleted while program is running
      */
-    public AddressBook load() throws StorageOperationException {
+    public AddressBook load() throws StorageOperationException, FileDeletedWhileRunningException {
         try (final Reader fileReader =
                      new BufferedReader(new FileReader(path.toFile()))) {
 
@@ -138,6 +145,8 @@ public class StorageFile {
             throw new StorageOperationException("Error parsing file data format");
         } catch (IllegalValueException ive) {
             throw new StorageOperationException("File contains illegal data values; data type constraints not met");
+        } catch (RuntimeException rte) {
+        	throw new FileDeletedWhileRunningException("File deleted while program is running");
         }
     }
 
