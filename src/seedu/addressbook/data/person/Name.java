@@ -55,7 +55,9 @@ public class Name {
     public boolean isSimilar(Name other) {
     	if (other==null) {
     		return false;
-    	} else 
+    	} else if(!this.toString().toLowerCase().equals(other.toString().toLowerCase())) {
+    		return false;
+    	} else
     		return true;
     }
     	
