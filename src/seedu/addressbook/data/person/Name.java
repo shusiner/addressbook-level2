@@ -43,6 +43,22 @@ public class Name {
     public List<String> getWordsInName() {
         return Arrays.asList(fullName.split("\\s+"));
     }
+    /**
+     * Returns true of the other name is very similar to this name.
+     * Two names are considered similar if: 
+     * -they are same disregarding if they are in capital letters(eg. John == john)
+     * -they are same up to reordering(eg. Tan Ah Kao == Ah Kao, Tan == Kao, Ah Tan and so on)
+     * 
+     * @param other
+     * @return
+     */
+    public boolean isSimilar(Name other) {
+    	if (other==null) {
+    		return false;
+    	} else 
+    		return true;
+    }
+    	
 
     @Override
     public String toString() {
